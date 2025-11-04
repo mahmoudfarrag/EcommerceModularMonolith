@@ -12,20 +12,43 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
+
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Catalog.Api\Catalog.Api.csproj" />
-    <ProjectReference Include="..\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
     <ProjectReference Include="..\ECommerce.Shared\ECommerce.Shared.csproj" />
-    <ProjectReference Include="..\Order.Api\Order.Api.csproj" />
-    <ProjectReference Include="..\Orders.Infrastrcture\Orders.Infrastrcture.csproj" />
-    <ProjectReference Include="..\Payments.Api\Payments.Api.csproj" />
-    <ProjectReference Include="..\Payments.Infrastructure\Payments.Infrastructure.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	
+
+	<!-- 🔥 Copy ALL module DLLs (Api + Infrastructure + Application + Domain + ModuleDefinition) --><!--
+	<Target Name="CopyModuleDlls" AfterTargets="Build">
+		--><!-- Ensure destination folder exists --><!--
+		<MakeDir Directories="$(OutputPath)\Modules" Condition="!Exists('$(OutputPath)\Modules')" />
+
+		--><!-- Find all module-related DLLs --><!--
+		<ItemGroup>
+			<ModuleDlls Include="..\**\bin\$(Configuration)\net8.0\*.Api.dll" />
+			<ModuleDlls Include="..\**\bin\$(Configuration)\net8.0\*.Infrastructure.dll" />
+			<ModuleDlls Include="..\**\bin\$(Configuration)\net8.0\*.Infrastrcture.dll" /> --><!-- this because wrong name for Orders.Infrastrcture --><!--
+			<ModuleDlls Include="..\**\bin\$(Configuration)\net8.0\*.Application.dll" />
+			<ModuleDlls Include="..\**\bin\$(Configuration)\net8.0\*.Domain.dll" />
+			<ModuleDlls Include="..\**\bin\$(Configuration)\net8.0\*.ModuleDefinition.dll" />
+		</ItemGroup>
+
+		--><!-- Copy to Modules folder --><!--
+		<Copy SourceFiles="@(ModuleDlls)" DestinationFolder="$(OutputPath)\Modules" SkipUnchangedFiles="true" ContinueOnError="false" />
+	</Target>-->
+
 
 </Project>

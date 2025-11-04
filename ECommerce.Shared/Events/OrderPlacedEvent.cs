@@ -5,9 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ECommerce.Shared.Events;
-public sealed class OrderPlacedEvent : IEvent
+public class OrderPlacedEvent : IIntegrationEvent
 {
-    public Guid OrderId { get; init; }
-    public Guid ProductId { get; init; }
-    public decimal Amount { get; init; }
+    public Guid Id { get; private set; } = Guid.NewGuid();
+    public DateTime OccurredOnUtc { get; private set; } = DateTime.UtcNow;
+
+    public Guid OrderId { get; set; }
+    public Guid ProductId { get; set; }
+    public decimal Amount { get; set; }
 }

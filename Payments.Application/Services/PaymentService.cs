@@ -1,16 +1,21 @@
-﻿using Payments.Domain.Entities;
-using Payments.Infrastructure.Persistence;
+﻿using Payments.Application.Interfaces;
+using Payments.Domain.Entities;
+
 
 namespace Payments.Application.Services;
 
 public class PaymentService
 {
-    private readonly PaymentsDbContext _db;
-    public PaymentService(PaymentsDbContext db) => _db = db;
+    private readonly IPaymentRepository _db;
+
+    public PaymentService(IPaymentRepository db)
+    {
+        _db = db;
+    }
 
     public async Task AddAsync(Payment p)
     {
-        await _db.Payments.AddAsync(p);
-        await _db.SaveChangesAsync();
+        await _db.AddAsync(p);
+       
     }
 }

@@ -15,13 +15,13 @@ public static class EventBus
     private static readonly ConcurrentDictionary<Type, List<Func<object, Task>>> _handlers
         = new();
 
-    public static void Subscribe<TEvent>(Func<TEvent, Task> handler) where TEvent : IEvent
+    public static void Subscribe<TEvent>(Func<TEvent, Task> handler) where TEvent : IIntegrationEvent
     {
         var list = _handlers.GetOrAdd(typeof(TEvent), _ => new List<Func<object, Task>>());
         list.Add(evt => handler((TEvent)evt));
     }
 
-    public static async Task PublishAsync<TEvent>(TEvent @event) where TEvent : IEvent
+    public static async Task PublishAsync<TEvent>(TEvent @event) where TEvent : IIntegrationEvent
     {
         if (_handlers.TryGetValue(typeof(TEvent), out var handlers))
         {

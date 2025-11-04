@@ -12,6 +12,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Catalog.Domain\Catalog.Domain.csproj" />
+    <ProjectReference Include="..\ECommerce.Shared\ECommerce.Shared.csproj" />
   </ItemGroup>
-
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Copy SourceFiles="@(MainAssembly)"
+			  DestinationFolder="D:\Courses\Tech Mentors\ModulesLibraries"
+			  SkipUnchangedFiles="true" />
+	</Target>
 </Project>

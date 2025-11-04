@@ -16,7 +16,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Orders.Application\Orders.Application.csproj" />
     <ProjectReference Include="..\Payments.Domain\Payments.Domain.csproj" />
-    <ProjectReference Include="..\Payments.Infrastructure\Payments.Infrastructure.csproj" />
   </ItemGroup>
-
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Copy SourceFiles="@(MainAssembly)"
+			  DestinationFolder="D:\Courses\Tech Mentors\ModulesLibraries"
+			  SkipUnchangedFiles="true" />
+	</Target>
 </Project>

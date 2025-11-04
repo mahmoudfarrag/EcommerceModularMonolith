@@ -1,0 +1,28 @@
+﻿<Project>
+	<!-- This target runs after each module builds -->
+	<Target Name="CopyModuleArtifacts" AfterTargets="Build">
+
+		<!-- Where to copy the output -->
+		<PropertyGroup>
+			<!-- Shared folder for all module outputs -->
+			<ModulesOutputDir>$(SolutionDir)Artifacts\Modules</ModulesOutputDir>
+		</PropertyGroup>
+
+		<!-- Ensure destination folder exists -->
+		<MakeDir Directories="$(ModulesOutputDir)" />
+
+		<!-- Select which DLLs to copy -->
+		<ItemGroup>
+			<ModuleDlls Include="$(TargetDir)*.Api.dll" />
+			<ModuleDlls Include="$(TargetDir)*.Application.dll" />
+			<ModuleDlls Include="$(TargetDir)*.Domain.dll" />
+			<ModuleDlls Include="$(TargetDir)*.Infrastructure.dll" />
+			<ModuleDlls Include="$(TargetDir)*.ModuleDefinition.dll" />
+		</ItemGroup>
+
+		<!-- Copy to shared Modules folder -->
+		<Copy SourceFiles="@(ModuleDlls)"
+			  DestinationFolder="$(ModulesOutputDir)"
+			  SkipUnchangedFiles="true" />
+	</Target>
+</Project>

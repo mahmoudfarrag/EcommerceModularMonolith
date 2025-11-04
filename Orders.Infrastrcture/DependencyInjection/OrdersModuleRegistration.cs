@@ -4,8 +4,12 @@ using Orders.Application.Services;
 using Orders.Infrastructure.Persistence;
 using Orders.Infrastructure.Repositories;
 using Orders.Application.Interfaces;
+using Orders.Infrastrcture.Repositories;
+using Orders.Infrastrcture.Outbox;
+using Orders.Application.GatewayInterfaces;
+using Orders.Application.Gateways;
 
-namespace Orders.Api;
+namespace Orders.Infrastructure.DependencyInjection;
 
 public static class OrdersModuleRegistration
 {
@@ -19,6 +23,12 @@ public static class OrdersModuleRegistration
 
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<OrderService>();
+        services.AddScoped<IOutboxRepository, OutboxRepository>();
+        services.AddScoped<IOrdersInboundGateway, OrdersInboundGateway>();
+        services.AddScoped<IOrdersOutboundGateway, OrdersOutboundGateway>();
+        //IOrdersInboundGateway
+
+        services.AddHostedService<OutboxProcessor>();
         return services;
     }
 }

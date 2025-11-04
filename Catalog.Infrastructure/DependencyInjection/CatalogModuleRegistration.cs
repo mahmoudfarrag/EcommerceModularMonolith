@@ -1,11 +1,11 @@
-﻿using Catalog.Application.Services;
+﻿using Catalog.Application.Interfaces;
+using Catalog.Application.Services;
 using Catalog.Infrastructure.Persistence;
 using Catalog.Infrastructure.Repositories;
-using Catalog.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Catalog.Api;
+namespace Catalog.Infrastructure.DependencyInjection;
 
 public static class CatalogModuleRegistration
 {

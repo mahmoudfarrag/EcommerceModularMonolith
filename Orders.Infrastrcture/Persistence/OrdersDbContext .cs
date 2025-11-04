@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using Orders.Domain.Entities;
+using System.Text.Json;
 
 namespace Orders.Infrastructure.Persistence;
 
@@ -7,6 +9,7 @@ public class OrdersDbContext : DbContext
 {
     public OrdersDbContext(DbContextOptions<OrdersDbContext> options) : base(options) { }
     public DbSet<Order> Orders => Set<Order>();
+    public DbSet<OutboxMessage> OutboxMessages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -19,6 +22,10 @@ public class OrdersDbContext : DbContext
             b.Property(x => x.CreatedAt);
         });
 
+        modelBuilder.Entity<OutboxMessage>().ToTable("OutboxMessages", "orders");
+
         base.OnModelCreating(modelBuilder);
     }
+   
+
 }

@@ -1,6 +1,4 @@
 ﻿using ECommerce.Shared.Events;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Payments.Application.Services;
 using Payments.Domain.Entities;
 

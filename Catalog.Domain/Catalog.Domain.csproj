@@ -5,5 +5,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
+	<ItemGroup>
+	  <ProjectReference Include="..\ECommerce.Shared\ECommerce.Shared.csproj" />
+	</ItemGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Copy SourceFiles="@(MainAssembly)"
+			  DestinationFolder="D:\Courses\Tech Mentors\ModulesLibraries"
+			  SkipUnchangedFiles="true" />
+	</Target>
 </Project>
